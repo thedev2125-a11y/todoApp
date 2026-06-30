@@ -20,6 +20,12 @@
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   color: #1f2937;
 }
+.error {
+  color: red;
+  font-size: 14px;
+  margin-top: 5px;
+  margin-right: auto;
+}
 @media (max-width: 1080px) {
   .main {
     display: block;
