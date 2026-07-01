@@ -7,7 +7,11 @@ export default function Home() {
   const [errhandle, setErrhandle] = useState("");
   const addTask = () => {
     if (task.trim() !== "") {
-      setTodos([...todos, task]);
+      setTodos([...todos, {
+        id: Date.now(),
+        text: task.trim(),
+        completed: false
+      }]);
       setTask("");
     } else {
       setErrhandle("Please enter a task.");
@@ -19,7 +23,7 @@ export default function Home() {
     }
   };
   const editTask = (index) => {
-    const newTask = prompt("Edit the task:", todos[index]);
+    const newTask = prompt("Edit the task:", todos[index].text);
     if(newTask === null) {
       return;
     }
@@ -29,7 +33,7 @@ export default function Home() {
     }
     if (newTask !== null) {
       const updatedTodos = [...todos];
-      updatedTodos[index] = newTask.trim();
+      updatedTodos[index] = { ...updatedTodos[index], text: newTask.trim() };
       setTodos(updatedTodos);
     }
   };
@@ -46,7 +50,7 @@ export default function Home() {
       <div className="listbar">
         <div className="card">
           <h3>My Daily Task</h3>
-          <p>Today is another opportunity to make progress.</p>
+          <p className="title">Today is another opportunity to make progress.</p>
           <input
             className="inputtask"
             type="text"
@@ -64,9 +68,9 @@ export default function Home() {
           <div>
             {/* display the list of tasks here */}
             {todos.map((todo, index) => (
-              <div className="tasks" key={index}>
+              <div className="tasks" key={todo.id}>
                 <p>
-                  <span>{index + 1}.</span> {todo}{" "}
+                  <span>{index + 1}.</span> {todo.text}{" "}
                 </p>{" "}
                 <span className="icons">
                   <button onClick={() => editTask(index)}>✏️</button>

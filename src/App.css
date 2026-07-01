@@ -3,10 +3,11 @@
   padding: 0;
 }
 .main {
-  padding: 2%;
+  margin: 2%;
   display: flex;
+  justify-content: center;
   align-items: center;
-  gap: 40px;
+  gap: 50px;
 }
 .discipline {
   color: #34de78;
@@ -32,6 +33,7 @@
   }
   .discription {
     width: 100%;
+    margin-bottom: 5%;
   }
 }
 .listbar {
@@ -47,9 +49,11 @@ h3 {
   text-align: center;
   margin: 1%;
 }
-p {
-  text-align: center;
-  margin: 1%;
+.title{
+    text-align: center;
+    margin: 1%;
+    font-size: larger;
+    font-weight: 500;
 }
 .inputtask {
   width: 75%;
@@ -77,7 +81,7 @@ button:hover {
 }
 .tasks {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   padding: 1%;
   margin: 1%;
@@ -85,8 +89,9 @@ button:hover {
   background-color: #d4d4d8;
 }
 .icons {
-   margin-left: auto;
-   justify-content: space-between;
+   display: flex;
+   gap: 10px;
+   justify-content: space-around;
    padding-left: 1%;
 }
 .icons button , input[type="checkbox"] {
