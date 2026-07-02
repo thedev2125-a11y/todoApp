@@ -26,6 +26,7 @@
   font-size: 14px;
   margin-top: 5px;
   margin-right: auto;
+  text-align: center;
 }
 @media (max-width: 1080px) {
   .main {
@@ -62,6 +63,7 @@ h3 {
   box-shadow: none;
   border: 1px solid;
   padding: 1%;
+  margin-bottom: 1%;
 }
 button:hover {
   background-color: #727372;
@@ -87,12 +89,25 @@ button:hover {
   margin: 1%;
   border-radius: 10px;
   background-color: #d4d4d8;
+  font-weight: 600;
+}
+.completed{
+    display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1%;
+  margin: 1%;
+  border-radius: 10px;
+  background-color: rgb(10, 187, 80);
+  color: white;
+  font-weight: 600;
 }
 .icons {
    display: flex;
    gap: 10px;
    justify-content: space-around;
    padding-left: 1%;
+   margin-left: auto;
 }
 .icons button , input[type="checkbox"] {
   background-color: transparent;

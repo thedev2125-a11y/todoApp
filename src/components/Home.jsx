@@ -17,13 +17,14 @@ export default function Home() {
       setErrhandle("Please enter a task.");
     }
   };
-  const deleteTask = (index) => {
+  const deleteTask = (id) => {
     if (window.confirm("Are you sure you want to delete this task?")) {
-      setTodos(todos.filter((_, i) => i !== index));
+      setTodos(todos.filter((todo) => todo.id !== id));
     }
   };
-  const editTask = (index) => {
-    const newTask = prompt("Edit the task:", todos[index].text);
+  const editTask = (id) => {
+    const todo = todos.find((todo) => todo.id === id);
+    const newTask = prompt("Edit the task:", todo.text);
     if(newTask === null) {
       return;
     }
@@ -33,9 +34,18 @@ export default function Home() {
     }
     if (newTask !== null) {
       const updatedTodos = [...todos];
+      const index = updatedTodos.findIndex((todo) => todo.id === id);
       updatedTodos[index] = { ...updatedTodos[index], text: newTask.trim() };
       setTodos(updatedTodos);
     }
+  };
+  const checkbox = (id) => {
+    setTodos(todos.map(todo => {
+      if (todo.id === id) {
+        return { ...todo, completed: !todo.completed };
+      }
+      return todo;
+    }));
   };
   return (
     <div className="main">
@@ -65,20 +75,27 @@ export default function Home() {
             Add task
           </button>
           {errhandle && <p className="error">{errhandle}</p>}
-          <div>
-            {/* display the list of tasks here */}
+          <div>{
+            todos.length === 0 ?
+                (<p>Start by adding your first task.</p>)
+                :(<div>
             {todos.map((todo, index) => (
-              <div className="tasks" key={todo.id}>
+              <div className={todo.completed ? "completed" : "tasks"} key={todo.id}>
                 <p>
                   <span>{index + 1}.</span> {todo.text}{" "}
                 </p>{" "}
                 <span className="icons">
-                  <button onClick={() => editTask(index)}>✏️</button>
-                  <button onClick={() => deleteTask(index)}>🗑️</button>{" "}
-                  <input  type="checkbox" />
+                  <button onClick={() => editTask(todo.id)}>✏️</button>
+                  <button onClick={() => deleteTask(todo.id)}>🗑️</button>{" "}
+                  <input  type="checkbox"
+                  checked={todo.completed}
+                  onChange={() => checkbox(todo.id)}
+                  />
                 </span>
               </div>
             ))}
+            </div>)
+}
           </div>
         </div>
       </div>
