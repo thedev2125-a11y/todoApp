@@ -61,6 +61,11 @@ export default function Home() {
         <div className="card">
           <h3>My Daily Task</h3>
           <p className="title">Today is another opportunity to make progress.</p>
+          <div className="statics">
+            <label className="one">Completed: <span>{todos.filter(t => t.completed).length}</span></label>
+            <label className="two">Remaining: <span>{todos.filter(t => !t.completed).length}</span></label>
+            <label className="three">Total: <span>{todos.length}</span></label>
+          </div>
           <input
             className="inputtask"
             type="text"

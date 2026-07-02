@@ -92,7 +92,7 @@ button:hover {
   font-weight: 600;
 }
 .completed{
-    display: flex;
+  display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 1%;
@@ -101,6 +101,7 @@ button:hover {
   background-color: rgb(10, 187, 80);
   color: white;
   font-weight: 600;
+  font-size: larger;
 }
 .icons {
    display: flex;
@@ -121,4 +122,26 @@ button:hover {
 }
 .icons input[type="checkbox"] {
   transform: scale(1.5); 
+}
+.statics{
+  display: flex;
+  justify-content: space-around;
+  margin: 3% 0;
+}
+.statics label{
+  background-color: #959596;
+  color: white;
+  padding: 3%;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: larger;
+}
+.statics one{
+  background-color: rgb(10, 187, 80);
+}
+.statics label.one{
+  background-color: #34db50;
+}
+.statics label.two{
+  background-color: #eaa22f;
 }
