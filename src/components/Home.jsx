@@ -1,20 +1,36 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../App.css";
 
 export default function Home() {
   const [task, setTask] = useState("");
-  const [todos, setTodos] = useState([]);
   const [errhandle, setErrhandle] = useState("");
+  const [success, setSuccess] = useState("");
+  const [todos, setTodos] = useState(() => {
+    const savedTodos = localStorage.getItem("todos");
+    return savedTodos ? JSON.parse(savedTodos) : [];
+  });
+  useEffect(() => {
+    document.title = "ToDo App";
+  }, []);
+  useEffect(() => {
+  localStorage.setItem("todos", JSON.stringify(todos));
+}, [todos]);
   const addTask = () => {
     if (task.trim() !== "") {
-      setTodos([...todos, {
-        id: Date.now(),
-        text: task.trim(),
-        completed: false
-      }]);
+      setTodos([
+        ...todos,
+        {
+          id: Date.now(),
+          text: task.trim(),
+          completed: false,
+        },
+      ]);
       setTask("");
+      setSuccess("Task added successfully.");
+      setTimeout(() => setSuccess(""), 1000);
     } else {
       setErrhandle("Please enter a task.");
+      setTimeout(() => setErrhandle(""), 5000);
     }
   };
   const deleteTask = (id) => {
@@ -25,7 +41,7 @@ export default function Home() {
   const editTask = (id) => {
     const todo = todos.find((todo) => todo.id === id);
     const newTask = prompt("Edit the task:", todo.text);
-    if(newTask === null) {
+    if (newTask === null) {
       return;
     }
     if (newTask.trim() === "") {
@@ -40,12 +56,14 @@ export default function Home() {
     }
   };
   const checkbox = (id) => {
-    setTodos(todos.map(todo => {
-      if (todo.id === id) {
-        return { ...todo, completed: !todo.completed };
-      }
-      return todo;
-    }));
+    setTodos(
+      todos.map((todo) => {
+        if (todo.id === id) {
+          return { ...todo, completed: !todo.completed };
+        }
+        return todo;
+      }),
+    );
   };
   return (
     <div className="main">
@@ -60,11 +78,19 @@ export default function Home() {
       <div className="listbar">
         <div className="card">
           <h3>My Daily Task</h3>
-          <p className="title">Today is another opportunity to make progress.</p>
+          <p className="title">
+            Today is another opportunity to make progress.
+          </p>
           <div className="statics">
-            <label className="one">Completed: <span>{todos.filter(t => t.completed).length}</span></label>
-            <label className="two">Remaining: <span>{todos.filter(t => !t.completed).length}</span></label>
-            <label className="three">Total: <span>{todos.length}</span></label>
+            <label className="one">
+              Completed: <span>{todos.filter((t) => t.completed).length}</span>
+            </label>
+            <label className="two">
+              Remaining: <span>{todos.filter((t) => !t.completed).length}</span>
+            </label>
+            <label className="three">
+              Total: <span>{todos.length}</span>
+            </label>
           </div>
           <input
             className="inputtask"
@@ -75,33 +101,46 @@ export default function Home() {
               setTask(e.target.value);
               setErrhandle("");
             }}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                addTask();
+              }
+            }}
           />
           <button className="addtask" onClick={addTask}>
             Add task
           </button>
           {errhandle && <p className="error">{errhandle}</p>}
-          <div>{
-            todos.length === 0 ?
-                (<p>Start by adding your first task.</p>)
-                :(<div>
-            {todos.map((todo, index) => (
-              <div className={todo.completed ? "completed" : "tasks"} key={todo.id}>
-                <p>
-                  <span>{index + 1}.</span> {todo.text}{" "}
-                </p>{" "}
-                <span className="icons">
-                  <button onClick={() => editTask(todo.id)}>✏️</button>
-                  <button onClick={() => deleteTask(todo.id)}>🗑️</button>{" "}
-                  <input  type="checkbox"
-                  checked={todo.completed}
-                  onChange={() => checkbox(todo.id)}
-                  />
-                </span>
+          <div>
+            {todos.length === 0 ? (
+              <p>Start by adding your first task.</p>
+            ) : (
+              <div>
+                {todos.map((todo, index) => (
+                  <div
+                    className={todo.completed ? "completed" : "tasks"}
+                    key={todo.id}
+                  >
+                    <p>
+                      <span>{index + 1}.</span> {todo.text}{" "}
+                    </p>{" "}
+                    <span className="icons">
+                      <button onClick={() => editTask(todo.id)}>✏️</button>
+                      <button onClick={() => deleteTask(todo.id)}>
+                        🗑️
+                      </button>{" "}
+                      <input
+                        type="checkbox"
+                        checked={todo.completed}
+                        onChange={() => checkbox(todo.id)}
+                      />
+                    </span>
+                  </div>
+                ))}
               </div>
-            ))}
-            </div>)
-}
+            )}
           </div>
+          {success && <p className="success">{success}</p>}
         </div>
       </div>
     </div>

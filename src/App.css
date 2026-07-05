@@ -145,3 +145,11 @@ button:hover {
 .statics label.two{
   background-color: #eaa22f;
 }
+.success{
+  color: rgb(23, 225, 23);
+  font-size: 1.5rem;
+  margin-top: 5px;
+  margin-right: auto;
+  text-align: center;
+  font-weight: bold;
+}
